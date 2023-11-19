@@ -172,7 +172,7 @@ jobs:
 
   update-manifest-stage:
     runs-on: ubuntu-latest
-    needs: ['build-and-push-docker-image']
+    needs: [' push-docker-image']
     steps:
       - uses: actions/checkout@v3
         with:
