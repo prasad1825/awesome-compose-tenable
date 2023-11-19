@@ -243,9 +243,7 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git config --list
           git add deployment.yaml
           git commit -m "Update image SHA to ${{ steps.get_sha.outputs.SHA }}"
           git push origin main
-        env:
-          GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
+        
