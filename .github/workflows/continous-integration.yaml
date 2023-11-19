@@ -132,7 +132,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: List files in directory
-        run: ls -R awesome-compose-tenable/react-java-mysql/
+        run: ls -l 
 
       # Build Docker images from Docker Compose file
       - name: Build image from Docker Compose
