@@ -136,7 +136,7 @@ jobs:
 
       # Build Docker images from Docker Compose file
       - name: Build image from Docker Compose
-        run: docker-compose -f awesome-compose-tenable/react-java-mysql/compose.yaml build
+        run: docker-compose -f ./react-java-mysql/compose.yaml build
 
       # Tag the images with git commit sha
       - name: Tag images with git commit sha
