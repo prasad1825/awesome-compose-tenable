@@ -227,6 +227,15 @@ jobs:
       - name: List files in directory
         run: ls -l 
 
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          repository: prasad1825/awesome-compose-tenable-infra
+          token: ${{ secrets.G_TOKEN }}
+      
+      - name: List files in directory
+        run: ls -l 
+
       - name: Update Deployment File
         run: |
           sed -i "s#pasu1825/react-java-mysql_frontend:[a-zA-Z0-9]*#pasu1825/react-java-mysql_frontend:${{ steps.get_sha.outputs.SHA }}#g" deployment.yaml
