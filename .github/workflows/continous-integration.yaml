@@ -224,6 +224,9 @@ jobs:
         id: get_sha
         run: echo "::set-output name=SHA::$(git rev-parse HEAD)"
 
+      - name: List files in directory
+        run: ls -l 
+
       - name: Update Deployment File
         run: |
           sed -i "s#pasu1825/react-java-mysql_frontend:[a-zA-Z0-9]*#pasu1825/react-java-mysql_frontend:${{ steps.get_sha.outputs.SHA }}#g" deployment.yaml
