@@ -184,27 +184,55 @@ jobs:
   #     - run: echo ${{ github }}
   #     - run: git push origin master 
 
+  # update-manifest-stage:
+  #   runs-on: ubuntu-latest
+  #   needs: ['build-push-docker-image']
+  #   steps:
+  #    - name: Checkout repository
+  #      uses: actions/checkout@v2
+  #      with:
+  #         repository: prasad1825/awesome-compose-tenable-infra
+  #         ref: 'main'
+  #         token: ${{ secrets.G_TOKEN }}
+
+  #    - name: Update image tags in deployment.yaml
+  #      run: |
+  #         echo "Updating image tags in deployment.yaml"
+  #         sed -i "s#pasu1825/react-java-mysql_frontend:.*#pasu1825/react-java-mysql_frontend:${{ github.sha }}#" deployment.yaml
+  #         sed -i "s#pasu1825/react-java-mysql_backend:.*#pasu1825/react-java-mysql_backend:${{ github.sha }}#" deployment.yaml
+
+  #    - name: Commit and push changes
+  #      run: |
+  #         git config --global user.email "pasu1825@gmail.com"
+  #         git config --global user.name "prasad1825"
+  #         git add deployment.yaml
+  #         git commit -m "Update image tags to ${{ github.sha }}"
+  #         git push origin master
+
+
   update-manifest-stage:
     runs-on: ubuntu-latest
     needs: ['build-push-docker-image']
     steps:
-     - name: Checkout repository
-       uses: actions/checkout@v2
-       with:
-          repository: prasad1825/awesome-compose-tenable-infra
-          ref: 'master'
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          repository: prasad1825/awesome-compose-tenable
           token: ${{ secrets.G_TOKEN }}
 
-     - name: Update image tags in deployment.yaml
-       run: |
-          echo "Updating image tags in deployment.yaml"
-          sed -i "s#pasu1825/react-java-mysql_frontend:.*#pasu1825/react-java-mysql_frontend:${{ github.sha }}#" deployment.yaml
-          sed -i "s#pasu1825/react-java-mysql_backend:.*#pasu1825/react-java-mysql_backend:${{ github.sha }}#" deployment.yaml
+      - name: Get Image SHA
+        id: get_sha
+        run: echo "::set-output name=SHA::$(git rev-parse HEAD)"
 
-     - name: Commit and push changes
-       run: |
+      - name: Update Deployment File
+        run: |
+          sed -i "s#pasu1825/react-java-mysql_frontend:[a-zA-Z0-9]*#pasu1825/react-java-mysql_frontend:${{ steps.get_sha.outputs.SHA }}#g" deployment.yaml
+          sed -i "s#pasu1825/react-java-mysql_backend:[a-zA-Z0-9]*#pasu1825/react-java-mysql_backend:${{ steps.get_sha.outputs.SHA }}#g" deployment.yaml
+
+      - name: Commit and Push Changes
+        run: |
           git config --global user.email "pasu1825@gmail.com"
           git config --global user.name "prasad1825"
           git add deployment.yaml
-          git commit -m "Update image tags to ${{ github.sha }}"
-          git push origin master
+          git commit -m "Update image SHA to ${{ steps.get_sha.outputs.SHA }}"
+          git push origin main
