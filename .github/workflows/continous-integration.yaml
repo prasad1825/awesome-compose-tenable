@@ -111,8 +111,8 @@ jobs:
   #     - name: Image digest
   #       run: echo ${{ steps.docker_build.outputs.digest }}
 
-  build-and-push-docker-image:
-    name: Build Docker image and push to repositories
+  build-docker-image:
+    name: Build Docker image 
     runs-on: ubuntu-latest
     needs: ['test', 'test-stage']
 
@@ -151,6 +151,11 @@ jobs:
       - name: list images
         run: docker images
 
+ push-docker-image:
+    name: push Docker image 
+    runs-on: ubuntu-latest
+    needs: ['build-docker-image']
+
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
@@ -160,8 +165,8 @@ jobs:
       # Push the Docker images to Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
-          docker push react-java-mysql_frontend:${{ github.sha }}
-          docker push react-java-mysql_backend:${{ github.sha }}
+          docker push pasu1825/react-java-mysql_frontend:${{ github.sha }}
+          docker push pasu1825/react-java-mysql_backend:${{ github.sha }}
 
 
   update-manifest-stage:
