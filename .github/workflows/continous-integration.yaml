@@ -243,6 +243,8 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
+          git config --global user.email "pasu1825@gmail.com"
+          git config --global user.name "prasad1825"
           git add deployment.yaml
           git commit -m "Update image SHA to ${{ steps.get_sha.outputs.SHA }}"
           git push origin main
