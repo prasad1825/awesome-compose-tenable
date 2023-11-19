@@ -25,7 +25,7 @@ function App() {
           <p>Loading...</p>
         )}
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Edit <code>src/App.tsx</code> and save to reload and this is dev app.
         </p>
         <a
           className="App-link"
