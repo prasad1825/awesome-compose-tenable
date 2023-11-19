@@ -190,7 +190,7 @@ jobs:
     steps:
      - name: Checkout repository
        uses: actions/checkout@v2
-        with:
+       with:
           repository: prasad1825/awesome-compose-tenable-infra
           ref: 'master'
           token: ${{ secrets.G_TOKEN }}
