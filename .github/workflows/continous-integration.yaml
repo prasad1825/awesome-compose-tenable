@@ -145,8 +145,8 @@ jobs:
       - name: Tag images with git commit sha
         run: |
           IMAGE_SHA=${{ github.sha }}
-          docker tag react-java-mysql_frontend:latest react-java-mysql_frontend:${{ github.sha }}
-          docker tag react-java-mysql_backend:latest react-java-mysql_backend:${{ github.sha }}
+          docker tag react-java-mysql_frontend:latest pasu1825/react-java-mysql_frontend:${{ github.sha }}
+          docker tag react-java-mysql_backend:latest pasu1825/react-java-mysql_backend:${{ github.sha }}
           
       - name: list images
         run: docker images
@@ -160,8 +160,8 @@ jobs:
       # Push the Docker images to Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
-          docker push react-java-mysql_frontend:${{ github.sha }}
-          docker push react-java-mysql_backend:${{ github.sha }}
+          docker push pasu1825/react-java-mysql_frontend:${{ github.sha }}
+          docker push pasu1825/react-java-mysql_backend:${{ github.sha }}
 
 
   update-manifest-stage:
