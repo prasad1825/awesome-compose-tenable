@@ -145,8 +145,8 @@ jobs:
       - name: Tag images with git commit sha
         run: |
           IMAGE_SHA=${{ github.sha }}
-          docker tag react-java-mysql_frontend:latest prasad1825/react-java-mysql_frontend:${IMAGE_SHA}
-          docker tag react-java-mysql_backend:latest prasad1825/react-java-mysql_backend:${IMAGE_SHA}
+          docker tag react-java-mysql_frontend:latest prasad1825/react-java-mysql_frontend:${{ github.sha }}
+          docker tag react-java-mysql_backend:latest prasad1825/react-java-mysql_backend:${{ github.sha }}
           
       - name: list images
         run: docker images
@@ -154,8 +154,8 @@ jobs:
       # Push the Docker images to Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
-          docker push prasad1825/react-java-mysql_frontend:${IMAGE_SHA}
-          docker push prasad1825/react-java-mysql_backend:${IMAGE_SHA}
+          docker push prasad1825/react-java-mysql_frontend:${{ github.sha }}
+          docker push prasad1825/react-java-mysql_backend:${{ github.sha }}
 
 
   update-manifest-stage:
@@ -172,7 +172,7 @@ jobs:
           git config --global user.email "pasu1825@gmail.com"
           git config --global user.name "prasad1825"
           echo ${{ github.sha }}
-          sed -i "s#${{ github.actor }}.*#${{ github.actor }}/gitops01:${{ github.sha }}#g" deployment.yaml
+          sed -i "s#${{ github.actor }}.*#${{ github.actor }}/awesome-compose-tenable:${{ github.sha }}#g" deployment.yaml
           git add -A
           git commit -am "Update image for - ${{ github.sha }}"
       - run: echo ${{ github }}
